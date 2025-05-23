@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Game</title>
+</head>
+<body>
+    <h2>Upload Your Game</h2>
+    <input type="file" id="gameFile">
+    <button onclick="uploadFile()">Upload</button>
+
+    <p id="response"></p>
+
+    <script>
+        async function uploadFile() {
+            const fileInput = document.getElementById("gameFile");
+            if (fileInput.files.length === 0) {
+                alert("Please select a file to upload.");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("gameFile", fileInput.files[0]);
+
+            try {
+                const response = await fetch("http://localhost:5000/upload", {
+                    method: "POST",
+                    body: formData,
+                });
+
+                const result = await response.json();
+                document.getElementById("response").innerHTML =
+                    response.ok
+                        ? `✅ File uploaded successfully: <a href="${result.gameUrl}" target="_blank">View File</a>`
+                        : `❌ Error: ${result.error}`;
+            } catch (error) {
+                document.getElementById("response").innerText = "❌ Upload failed.";
+            }
+        }
+    </script>
+</body>
+</html>

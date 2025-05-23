@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Game</title>
+</head>
+<body>
+    <h2>Upload Your Game</h2>
+    
+    <label>Game Name:</label><br>
+    <input type="text" id="gameName"><br><br>
+
+    <label>Game Description:</label><br>
+    <textarea id="gameDescription"></textarea><br><br>
+
+    <label>Category:</label><br>
+    <select id="category" required>
+        <option value="">--Select Category--</option>
+        <option value="Action">Action</option>
+        <option value="Adventure">Adventure</option>
+        <option value="Puzzle">Puzzle</option>
+        <option value="Sci-Fi">Sci-Fi</option>
+        <option value="Racing">Racing</option>
+        <option value="Strategy">Strategy</option>
+    </select><br><br>
+
+    <label>Game ZIP File:</label><br>
+    <input type="file" id="gameFile" accept=".zip"><br><br>
+
+    <label>Thumbnail (JPG/PNG):</label><br>
+    <input type="file" id="thumbnail" accept="image/*"><br><br>
+
+    <button onclick="uploadFile()">Upload</button>
+
+    <p id="response"></p>
+
+    <script>
+        async function uploadFile() {
+            const gameFile = document.getElementById("gameFile").files[0];
+            const thumbnail = document.getElementById("thumbnail").files[0];
+            const name = document.getElementById("gameName").value.trim();
+            const description = document.getElementById("gameDescription").value.trim();
+            const category = document.getElementById("category").value;
+
+            if (!name || !description || !category || !gameFile || !thumbnail) {
+                alert("Please fill in all fields and select both files.");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("gameFile", gameFile);
+            formData.append("thumbnail", thumbnail);
+            formData.append("name", name);
+            formData.append("description", description);
+            formData.append("category", category);
+
+            try {
+                const response = await fetch("http://localhost:5000/upload", {
+                    method: "POST",
+                    body: formData,
+                });
+
+                const result = await response.json();
+                document.getElementById("response").innerHTML =
+                    response.ok
+                        ? `✅ Game uploaded successfully: ${result.game.name}`
+                        : `❌ Error: ${result.error}`;
+            } catch (error) {
+                document.getElementById("response").innerText = "❌ Upload failed.";
+            }
+        }
+    </script>
+</body>
+</html>  

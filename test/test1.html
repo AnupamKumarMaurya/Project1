@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GameVault</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0d0d1a;
+      color: white;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: #0b0b17;
+      border-bottom: 1px solid #1a1a2e;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .logo span {
+      color: #a259ff;
+    }
+
+    nav a {
+      color: #d4d4f0;
+      margin: 0 1rem;
+      text-decoration: none;
+      font-weight: 500;
+      position: relative;
+    }
+
+    nav a:hover,
+    nav a.active {
+      color: #00ffe1;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+    }
+
+    .search-bar {
+      padding: 0.5rem;
+      border-radius: 20px;
+      border: none;
+      width: 200px;
+      margin-right: 1rem;
+    }
+
+    .upload-btn {
+      background-color: #a259ff;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .hero {
+      padding: 4rem 2rem;
+      text-align: center;
+      background: radial-gradient(circle at right, #0f0f2e, #0d0d1a);
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 span {
+      color: #a259ff;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: #a0a0b0;
+      margin-bottom: 2rem;
+    }
+
+    .hero-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .hero-buttons button {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: background 0.3s;
+    }
+
+    .btn-primary {
+      background-color: #a259ff;
+      color: white;
+    }
+
+    .btn-secondary {
+      background-color: #1a1a2e;
+      color: white;
+      border: 1px solid #333;
+    }
+
+    .btn-primary:hover {
+      background-color: #c084ff;
+    }
+
+    .btn-secondary:hover {
+      background-color: #26264d;
+    }
+
+    .section-title {
+      padding: 2rem 2rem 1rem;
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+
+    .section-title span {
+      color: #00ffe1;
+    }
+
+    .view-all {
+      float: right;
+      color: #a259ff;
+      font-size: 0.9rem;
+      margin-right: 2rem;
+      text-decoration: none;
+    }
+
+    .category-card {
+  flex: 1 1 200px;
+  background-color: #0b0b17;
+  border: 1px solid #1a1a2e;
+  padding: 1rem;
+  border-radius: 12px;
+  text-align: center;
+  transition: 0.3s;
+}
+
+.category-card:hover {
+  background-color: #151531;
+}
+
+.category-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin: 0 auto 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.upload-section {
+  display: flex;
+  gap: 2rem;
+  background-color: #0b0b1d;
+  padding: 3rem 2rem;
+  border-radius: 20px;
+  margin: 2rem;
+  flex-wrap: wrap;
+}
+
+.upload-left {
+  flex: 1 1 400px;
+  color: #e0e0ff;
+}
+
+.upload-left h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.upload-left p {
+  color: #a0a0b0;
+  max-width: 500px;
+}
+
+.upload-features {
+  list-style: none;
+  padding: 1rem 0;
+  color: #d0ccff;
+}
+
+.upload-features li {
+  margin-bottom: 0.5rem;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.upload-btn {
+  background-color: #a259ff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 10px;
+  font-weight: bold;
+  color: white;
+  font-family: 'Orbitron', sans-serif;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.upload-right {
+  flex: 1 1 400px;
+}
+
+.upload-box {
+  border: 2px dashed #a259ff;
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  color: #ccc;
+}
+
+.upload-icon {
+  font-size: 2rem;
+  color: #a259ff;
+  margin-bottom: 1rem;
+}
+
+.upload-box h3 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.upload-box p {
+  margin: 0.5rem 0;
+  color: #888;
+}
+
+.browse-btn {
+  background-color: transparent;
+  border: 1px solid #a259ff;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Orbitron', sans-serif;
+  margin: 1rem 0;
+}
+
+.file-limit {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* Recently Added */
+.recent-section {
+  padding: 3rem 2rem;
+  color: #fff;
+  background-color: #0b0b1d;
+}
+
+.recent-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.recent-header a {
+  color: #a259ff;
+  text-decoration: none;
+}
+
+.no-games {
+  color: #888;
+  text-align: center;
+  padding: 2rem 0;
+}
+
+/* Footer */
+.footer {
+  background-color: #0b0b1d;
+  padding: 3rem 2rem 2rem;
+  color: #ddd;
+  border-top: 1px solid #222;
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.footer-column {
+  flex: 1 1 200px;
+}
+
+.footer-column h4 {
+  font-family: 'Orbitron', sans-serif;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-column ul li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-column ul li a {
+  text-decoration: none;
+  color: #bbb;
+  transition: color 0.3s;
+}
+
+.footer-column ul li a:hover {
+  color: #a259ff;
+}
+
+.brand h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.vault-purple {
+  color: #a259ff;
+}
+
+.social-icons button {
+  margin-right: 0.5rem;
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 50%;
+  padding: 0.5rem;
+  color: #fff;
+  cursor: pointer;
+}
+
+.newsletter-input {
+  display: flex;
+  margin-top: 1rem;
+}
+
+.newsletter-input input {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px 0 0 8px;
+  flex: 1;
+  background-color: #111;
+  color: #fff;
+}
+
+.newsletter-input button {
+  background-color: #a259ff;
+  color: white;
+  border: none;
+  padding: 0 1rem;
+  border-radius: 0 8px 8px 0;
+  cursor: pointer;
+}
+
+
+
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">🎮 Game<span>Vault</span></div>
+    <nav>
+      <a href="#" class="active">Home</a>
+      <a href="#">Browse</a>
+      <a href="#">Categories</a>
+    </nav>
+    <div class="nav-right">
+      <input type="text" class="search-bar" placeholder="Search games..." />
+      <button class="upload-btn">Upload</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>Upload, Play,<br><span>Discover</span></h1>
+    <p>
+      GameVault lets you upload your games and share them with players worldwide. 
+      Join our community of creators and gamers today.
+    </p>
+    <div class="hero-buttons">
+      <button class="btn-primary">🎮 Start Playing</button>
+      <button class="btn-secondary">⏫ Upload Your Game</button>
+    </div>
+  </section>
+  <!-- Game Categories -->
+<section style="padding: 2rem;">
+    <h2 style="font-size: 2rem; font-family: 'Orbitron', sans-serif;">Game Categories</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 1.5rem;">
+      <!-- Category Card -->
+      <div class="category-card">
+        <div class="category-icon" style="background-color: #3c1361;">🗡️</div>
+        <h3>Action</h3>
+        <p>0 games</p>
+      </div>
+      <div class="category-card">
+        <div class="category-icon" style="background-color: #001f3f;">🎮</div>
+        <h3>Adventure</h3>
+        <p>0 games</p>
+      </div>
+      <div class="category-card">
+        <div class="category-icon" style="background-color: #003f3f;">🧠</div>
+        <h3>Puzzle</h3>
+        <p>0 games</p>
+      </div>
+      <div class="category-card">
+        <div class="category-icon" style="background-color: #2c003e;">🚀</div>
+        <h3>Sci-Fi</h3>
+        <p>0 games</p>
+      </div>
+      <div class="category-card">
+        <div class="category-icon" style="background-color: #3f0000;">🚗</div>
+        <h3>Racing</h3>
+        <p>0 games</p>
+      </div>
+      <div class="category-card">
+        <div class="category-icon" style="background-color: #002c3f;">📊</div>
+        <h3>Strategy</h3>
+        <p>0 games</p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Share Game Section -->
+  <section style="margin: 3rem 2rem; padding: 2rem; background-color: #0f0f2e; border-radius: 16px;">
+    <h2 style="font-size: 1.8rem; font-family: 'Orbitron', sans-serif; margin-bottom: 1rem;">Share Your Game With The World</h2>
+    <p style="max-width: 600px; color: #a0a0b0;">
+      Upload your game to GameVault and reach thousands of players worldwide.
+      Our platform supports multiple formats and provides tools to help your game succeed.
+    </p>
+    <div style="margin-top: 2rem; padding: 3rem; border: 2px dashed #a259ff; border-radius: 12px; text-align: center;">
+      <div style="font-size: 2rem; color: #a259ff;">☁️⬆️</div>
+      <p style="margin-top: 1rem; color: #a0a0b0;">Drag and drop your game files here</p>
+    </div>
+  </section>
+  <section class="upload-section">
+    <div class="upload-left">
+      <h2>Share Your Game With The World</h2>
+      <p>
+        Upload your game to GameVault and reach thousands of players worldwide.
+        Our platform supports multiple formats and provides tools to help your game succeed.
+      </p>
+  
+      <ul class="upload-features">
+        <li>✅ Simple upload process with detailed guidelines</li>
+        <li>✅ Analytics and player feedback for your games</li>
+        <li>✅ Multiple game formats supported (HTML5, WebGL, Unity)</li>
+      </ul>
+  
+      <button class="upload-btn">⬆ Upload Your Game</button>
+    </div>
+  
+    <div class="upload-right">
+      <div class="upload-box">
+        <div class="upload-icon">☁️⬆️</div>
+        <h3>Drag & Drop to Upload</h3>
+        <p>Supports ZIP files containing your game files or direct HTML5 games</p>
+        <button class="browse-btn">Browse Files</button>
+        <p class="file-limit">Maximum file size: 200MB</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recently Added Section -->
+<section class="recent-section">
+    <div class="recent-header">
+      <h2>Recently Added</h2>
+      <a href="#">View All →</a>
+    </div>
+    <p class="no-games">No games available yet</p>
+  </section>
+  
+  <!-- Footer Section -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-column brand">
+        <h3><span class="logo-icon">🎮</span> <span class="logo-text">Game<span class="vault-purple">Vault</span></span></h3>
+        <p>The ultimate platform for game developers and players to connect and share interactive experiences.</p>
+        <div class="social-icons">
+          <button>🐦</button>
+          <button>🎮</button>
+          <button>👨‍💻</button>
+          <button>📺</button>
+        </div>
+      </div>
+  
+      <div class="footer-column">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Browse Games</a></li>
+          <li><a href="#">Upload Game</a></li>
+          <li><a href="#">Categories</a></li>
+          <li><a href="#">Developer Tools</a></li>
+        </ul>
+      </div>
+  
+      <div class="footer-column">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">API Reference</a></li>
+          <li><a href="#">Community Forum</a></li>
+          <li><a href="#">Development Guide</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
+  
+      <div class="footer-column">
+        <h4>Newsletter</h4>
+        <p>Subscribe to our newsletter to get updates on new games and features.</p>
+        <div class="newsletter-input">
+          <input type="email" placeholder="Your email">
+          <button>📨</button>
+        </div>
+      </div>
+    </div>
+  </footer>
+  
+  
+
+  <div class="section-title">
+    Featured Games
+    <a class="view-all" href="#">View All →</a>
+  </div>
+
+</body>
+</html>

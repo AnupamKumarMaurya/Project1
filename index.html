@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Hosting Platform</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Game Hosting Platform</h1>
+    </header>
+
+    <main>
+        <section id="upload-section">
+            <h2>Upload a Game</h2>
+            <form id="upload-form">
+                <input type="text" id="game-name" placeholder="Game Name" required>
+                <textarea id="game-description" placeholder="Game Description"></textarea>
+                <input type="file" id="game-file" accept=".zip" required>
+                <button type="submit">Upload</button>
+            </form>
+        </section>
+
+        <section id="games-list">
+            <h2>Uploaded Games</h2>
+            <div id="games-container">
+                <!-- Dynamically rendered game items will appear here -->
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

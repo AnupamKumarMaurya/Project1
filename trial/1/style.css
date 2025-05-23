@@ -1,0 +1,22 @@
+body{
+    color: rgb(22, 22, 13);
+    background-color:rgb(173, 105, 105);
+  }
+  #first{
+    background-color: aquamarine;
+  }
+  #second{
+    background-color: rgb(96, 166, 52);
+  }
+  .bg-blue{
+    background-color: rgb(103, 61, 10);
+    color:white;
+    border:solid rgb(195, 180, 180);
+  }
+  #third{
+    background-color: rgb(119, 92, 51);
+  }
+  *{
+    margin: 0;
+    padding:0;
+  }

@@ -1,0 +1,425 @@
+/* General reset and styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #0d0d1a;
+    color: white;
+  }
+  
+  /* Header */
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #0b0b17;
+    border-bottom: 1px solid #1a1a2e;
+  }
+  
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    font-family: 'Orbitron', sans-serif;
+  }
+  
+  .logo span {
+    color: #a259ff;
+  }
+  
+  nav a {
+    color: #d4d4f0;
+    margin: 0 1rem;
+    text-decoration: none;
+    font-weight: 500;
+    position: relative;
+  }
+  
+  nav a:hover,
+  nav a.active {
+    color: #00ffe1;
+  }
+  
+  .nav-right {
+    display: flex;
+    align-items: center;
+  }
+  
+  .upload-btn {
+    background-color: #a259ff;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  /* Hero section */
+  .hero {
+    padding: 4rem 2rem;
+    text-align: center;
+    background: radial-gradient(circle at right, #0f0f2e, #0d0d1a);
+  }
+  
+  .hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+  
+  .hero h1 span {
+    color: #a259ff;
+  }
+  
+  .hero p {
+    font-size: 1.1rem;
+    color: #a0a0b0;
+    margin-bottom: 2rem;
+  }
+  
+  .hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .hero-buttons button {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background 0.3s;
+  }
+  
+  .btn-primary {
+    background-color: #a259ff;
+    color: white;
+  }
+  
+  .btn-secondary {
+    background-color: #1a1a2e;
+    color: white;
+    border: 1px solid #333;
+  }
+  
+  .btn-primary:hover {
+    background-color: #c084ff;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #26264d;
+  }
+/* Game Thumbnail Upload */
+#upload-form .thumbnail-preview {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+#upload-form .thumbnail-preview img {
+  max-width: 120px;
+  border-radius: 10px;
+  border: 2px solid #a259ff;
+  object-fit: cover;
+}
+
+/* Game Card in Recently Uploaded */
+.game-card {
+  background-color: #1e1e2f;
+  border: 1px solid #2e2e40;
+  border-radius: 12px;
+  padding: 1rem;
+  width: 250px;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(162, 89, 255, 0.2);
+  transition: transform 0.3s;
+}
+
+.game-card:hover {
+  transform: translateY(-5px);
+}
+
+.game-thumbnail {
+  width: 100%;
+  height: 150px;
+  border-radius: 10px;
+  object-fit: cover;
+  margin-bottom: 0.75rem;
+}
+
+.game-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.game-description {
+  font-size: 0.95rem;
+  color: #ccc;
+}
+
+/* Games list layout */
+#games-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: flex-start;
+  margin-top: 2rem;
+}
+
+
+  /* Category section (Updated for inline display) */
+  .category-list {
+    display: flex;
+    justify-content: space-between; /* Evenly distribute category cards */
+    align-items: center;
+    gap: 1rem; /* Space between cards */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    padding: 1rem 2rem;
+  }
+  
+  .category-card {
+    flex: 1 1 150px; /* Each card takes up 150px and flexes */
+    background-color: #0b0b17;
+    border: 1px solid #1a1a2e;
+    padding: 1rem;
+    border-radius: 12px;
+    text-align: center;
+    transition: 0.3s;
+  }
+  
+  .category-card:hover {
+    background-color: #151531;
+  }
+  
+  .category-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin: 0 auto 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+  }
+  
+  /* Upload Section */
+  .upload-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 4rem 2rem;
+    gap: 2rem;
+    background: linear-gradient(135deg, #1f0036, #3a0ca3);
+    color: #ffffff;
+    font-family: 'Orbitron', sans-serif;
+  }
+  
+  .upload-left {
+    flex: 1;
+    max-width: 45%;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    box-shadow: 0 0 30px rgba(162, 89, 255, 0.3);
+    transition: transform 0.3s ease;
+  }
+  
+  .upload-left:hover {
+    transform: translateY(-5px);
+  }
+  
+  .upload-left h2 {
+    font-size: 2rem;
+    color: #a259ff;
+    margin-bottom: 1rem;
+  }
+  
+  .upload-left p {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .upload-features {
+    list-style: none;
+    padding-left: 1rem;
+  }
+  
+  .upload-features li {
+    margin-bottom: 0.75rem;
+    padding-left: 1rem;
+    position: relative;
+  }
+  
+  .upload-features li::before {
+    content: "✨";
+    position: absolute;
+    left: 0;
+    color: #c084ff;
+  }
+  
+  .upload-right {
+    flex: 1;
+    max-width: 45%;
+    padding: 2rem;
+    background: #1e1e2f;
+    border-radius: 16px;
+    box-shadow: 0 0 20px rgba(162, 89, 255, 0.3);
+  }
+  
+  #upload-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  
+  #upload-form label {
+    font-weight: bold;
+    color: #ccccff;
+    font-size: 1rem;
+  }
+  
+  #upload-form input,
+  #upload-form textarea {
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    background: #2a2a3f;
+    color: #fff;
+    transition: box-shadow 0.3s ease;
+  }
+  
+  #upload-form input:focus,
+  #upload-form textarea:focus {
+    outline: none;
+    box-shadow: 0 0 8px #a259ff;
+  }
+  
+  .upload-btn {
+    background-color: #a259ff;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s;
+  }
+  
+  .upload-btn:hover {
+    background-color: #c084ff;
+    transform: scale(1.05);
+  }
+  
+  /* Recently Added Games */
+  .recent-section {
+    padding: 3rem 2rem;
+    color: #fff;
+    background-color: #0b0b1d;
+  }
+  
+  .recent-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Orbitron', sans-serif;
+  }
+  
+  .recent-header a {
+    color: #a259ff;
+    text-decoration: none;
+  }
+  
+  .no-games {
+    color: #888;
+    text-align: center;
+    padding: 2rem 0;
+  }
+  
+  /* Footer */
+  .footer {
+    background-color: #0b0b1d;
+    padding: 3rem 2rem 2rem;
+    color: #ddd;
+    border-top: 1px solid #222;
+  }
+  
+  .footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+  
+  .footer-column {
+    flex: 1 1 200px;
+  }
+  
+  .footer-column h4 {
+    font-family: 'Orbitron', sans-serif;
+    margin-bottom: 1rem;
+    color: #fff;
+  }
+  
+  .footer-column ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .footer-column ul li {
+    margin-bottom: 0.5rem;
+  }
+  
+  .footer-column ul li a {
+    text-decoration: none;
+    color: #bbb;
+    transition: color 0.3s;
+  }
+  
+  .footer-column ul li a:hover {
+    color: #a259ff;
+  }
+  
+  .brand h3 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+  
+  .brand p {
+    font-size: 0.9rem;
+  }
+  /* Category Dropdown Styling in Upload Form */
+#upload-form select {
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: #2a2a3f;
+  color: #fff;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg fill='%23ccc' viewBox='0 0 24 24' width='24' height='24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1rem;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+}
+
+#upload-form select:focus {
+  outline: none;
+  box-shadow: 0 0 8px #a259ff;
+}
