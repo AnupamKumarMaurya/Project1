@@ -8,96 +8,92 @@ const extract = require("extract-zip");
 const pool = require("./db");
 
 dotenv.config();
+
 const app = express();
+const PORT = 5000;
+
 app.use(cors());
 app.use(express.json());
-app.use("/uploads", express.static(path.join(__dirname, "uploads"))); // Serve uploaded games
 
-// Ensure 'uploads' directory exists
+// Serve uploaded games and assets
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+// Ensure uploads directory exists
 const uploadDir = path.join(__dirname, "uploads");
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir);
 }
 
-// File upload configuration
+// Multer configuration
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, "uploads/"); // Save uploaded files to 'uploads' directory
-    },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + path.extname(file.originalname)); // Use a timestamp for unique file names
-    },
+    destination: (req, file, cb) => cb(null, "uploads/"),
+    filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname)),
 });
-const upload = multer({ storage: storage });
+const upload = multer({ storage });
 
-// Expect two files: gameFile (ZIP) and thumbnail (JPG)
+// Handle zip + thumbnail uploads
 const gameUpload = upload.fields([
     { name: "gameFile", maxCount: 1 },
     { name: "thumbnail", maxCount: 1 },
 ]);
 
-
-// Upload and extract game file
+// Upload route
 app.post("/upload", gameUpload, async (req, res) => {
     try {
         const { name, description, category } = req.body;
+        const gameFile = req.files?.gameFile?.[0];
+        const thumbnailFile = req.files?.thumbnail?.[0];
 
-        if (!name || !category) {
-            return res.status(400).json({ error: "Game name and category are required." });
-        }
-
-        const gameFile = req.files["gameFile"]?.[0];
-        const thumbnailFile = req.files["thumbnail"]?.[0];
-
-        if (!gameFile) {
-            return res.status(400).json({ error: "No game file uploaded." });
+        if (!name || !category || !gameFile || !thumbnailFile) {
+            return res.status(400).json({ error: "Missing required fields or files." });
         }
 
         const filename = gameFile.filename;
-        const thumbnail = thumbnailFile ? thumbnailFile.filename : null;
-        const gameFolder = path.join(__dirname, "uploads", filename.split(".")[0]);
+        const thumbnail = thumbnailFile.filename;
+        const gameFolder = path.join(uploadDir, filename.split(".")[0]);
 
-        if (!fs.existsSync(gameFolder)) {
-            fs.mkdirSync(gameFolder);
-        }
+        if (!fs.existsSync(gameFolder)) fs.mkdirSync(gameFolder);
 
-        // Extract game ZIP
+        // Extract ZIP
         if (gameFile.mimetype.includes("zip")) {
             await extract(gameFile.path, { dir: gameFolder });
 
-            const extractedFiles = fs.readdirSync(gameFolder);
-            if (extractedFiles.length === 1) {
-                const onlyFolder = path.join(gameFolder, extractedFiles[0]);
+            // If extracted ZIP contains a single folder, flatten it
+            const extractedItems = fs.readdirSync(gameFolder);
+            if (extractedItems.length === 1) {
+                const onlyFolder = path.join(gameFolder, extractedItems[0]);
                 if (fs.statSync(onlyFolder).isDirectory()) {
-                    fs.readdirSync(onlyFolder).forEach((file) => {
+                    fs.readdirSync(onlyFolder).forEach(file => {
                         fs.renameSync(path.join(onlyFolder, file), path.join(gameFolder, file));
                     });
                     fs.rmdirSync(onlyFolder);
                 }
             }
 
+            // Delete original ZIP file
             fs.unlinkSync(gameFile.path);
-                    }
+        }
 
-        // Save game info to database
-        const result = await pool.query(
-`            INSERT INTO "Games" (name, description, filename, thumbnail, category) 
-             VALUES ($1, $2, $3, $4, $5) RETURNING *`,
-            [name, description, filename.split(".")[0], thumbnail, category]
-        );
+        // Insert into Games table
+        const result = await pool.query(`
+            INSERT INTO "Games" (name, description, filename, thumbnail, category)
+            VALUES ($1, $2, $3, $4, $5)
+            RETURNING *;
+        `, [name, description, filename.split(".")[0], thumbnail, category]);
 
-        // Update CategoryCounts (insert if not exists)
+        // Update CategoryCounts
         await pool.query(`
             INSERT INTO "CategoryCounts" (category, count)
             VALUES ($1, 1)
-            ON CONFLICT (category) DO UPDATE SET count = "CategoryCounts".count + 1
+            ON CONFLICT (category) DO UPDATE
+            SET count = "CategoryCounts".count + 1;
         `, [category]);
 
         res.status(200).json({ game: result.rows[0] });
 
     } catch (error) {
-        console.error("Error uploading game:", error);
-        res.status(500).json({ error: error.message });
+        console.error("Upload error:", error);
+        res.status(500).json({ error: "Error uploading game." });
     }
 });
 
@@ -111,12 +107,12 @@ app.get("/games", async (req, res) => {
     }
 });
 
-// ✅ NEW: Get games by category
+// Get games by category
 app.get("/games/category/:category", async (req, res) => {
-    const category = req.params.category;
+    const { category } = req.params;
     try {
         const result = await pool.query(
-            `SELECT * FROM "Games" WHERE category = $1 ORDER BY id DESC`,
+            'SELECT * FROM "Games" WHERE category = $1 ORDER BY id DESC',
             [category]
         );
         res.status(200).json({ games: result.rows });
@@ -125,19 +121,22 @@ app.get("/games/category/:category", async (req, res) => {
     }
 });
 
-// ✅ NEW: Get all category counts
+// Get category counts
 app.get("/categories", async (req, res) => {
     try {
-        const result = await pool.query(`SELECT * FROM "CategoryCounts"`);
+        const result = await pool.query('SELECT * FROM "CategoryCounts" ORDER BY category ASC');
         res.status(200).json({ categories: result.rows });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
 
-// Server setup
-app.listen(5000, () => console.log("✅ Server running on port 5000"));
-
+// Server test route
 app.get("/", (req, res) => {
-    res.json({ message: "Server is running!" });
-}); 
+    res.json({ message: "🎮 Game upload server is running!" });
+});
+
+// Start server
+app.listen(PORT, () => {
+    console.log(`✅ Server running on http://localhost:${PORT}`);
+});

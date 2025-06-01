@@ -1,75 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload Game</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Upload Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1a1a1a;
+      color: #f0f0f0;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    h2 {
+      color: #a970ff;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    textarea,
+    select,
+    input[type="file"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 4px;
+      margin-bottom: 16px;
+      border-radius: 8px;
+      border: none;
+      background-color: #2e2e2e;
+      color: #f0f0f0;
+    }
+
+    button {
+      background-color: #a970ff;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      background-color: #888;
+    }
+
+    #response {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    .success {
+      color: lightgreen;
+    }
+
+    .error {
+      color: tomato;
+    }
+  </style>
 </head>
 <body>
-    <h2>Upload Your Game</h2>
-    
-    <label>Game Name:</label><br>
-    <input type="text" id="gameName"><br><br>
+  <h2>Upload Your Game</h2>
 
-    <label>Game Description:</label><br>
-    <textarea id="gameDescription"></textarea><br><br>
+  <label for="gameName">Game Name:</label>
+  <input type="text" id="gameName" placeholder="Enter game name" />
 
-    <label>Category:</label><br>
-    <select id="category" required>
-        <option value="">--Select Category--</option>
-        <option value="Action">Action</option>
-        <option value="Adventure">Adventure</option>
-        <option value="Puzzle">Puzzle</option>
-        <option value="Sci-Fi">Sci-Fi</option>
-        <option value="Racing">Racing</option>
-        <option value="Strategy">Strategy</option>
-    </select><br><br>
+  <label for="gameDescription">Game Description:</label>
+  <textarea id="gameDescription" rows="4" placeholder="Brief game description..."></textarea>
 
-    <label>Game ZIP File:</label><br>
-    <input type="file" id="gameFile" accept=".zip"><br><br>
+  <label for="category">Category:</label>
+  <select id="category" required>
+    <option value="">--Select Category--</option>
+    <option value="Action">Action</option>
+    <option value="Adventure">Adventure</option>
+    <option value="Puzzle">Puzzle</option>
+    <option value="Sci-Fi">Sci-Fi</option>
+    <option value="Racing">Racing</option>
+    <option value="Strategy">Strategy</option>
+  </select>
 
-    <label>Thumbnail (JPG/PNG):</label><br>
-    <input type="file" id="thumbnail" accept="image/*"><br><br>
+  <label for="gameFile">Game ZIP File (only .zip):</label>
+  <input type="file" id="gameFile" accept=".zip" />
 
-    <button onclick="uploadFile()">Upload</button>
+  <label for="thumbnail">Thumbnail Image (JPG/PNG):</label>
+  <input type="file" id="thumbnail" accept="image/jpeg, image/png" />
 
-    <p id="response"></p>
+  <button onclick="uploadFile()" id="uploadBtn">Upload</button>
 
-    <script>
-        async function uploadFile() {
-            const gameFile = document.getElementById("gameFile").files[0];
-            const thumbnail = document.getElementById("thumbnail").files[0];
-            const name = document.getElementById("gameName").value.trim();
-            const description = document.getElementById("gameDescription").value.trim();
-            const category = document.getElementById("category").value;
+  <p id="response"></p>
 
-            if (!name || !description || !category || !gameFile || !thumbnail) {
-                alert("Please fill in all fields and select both files.");
-                return;
-            }
+  <script>
+    async function uploadFile() {
+      const gameFile = document.getElementById("gameFile").files[0];
+      const thumbnail = document.getElementById("thumbnail").files[0];
+      const name = document.getElementById("gameName").value.trim();
+      const description = document.getElementById("gameDescription").value.trim();
+      const category = document.getElementById("category").value;
+      const responseEl = document.getElementById("response");
+      const uploadBtn = document.getElementById("uploadBtn");
 
-            const formData = new FormData();
-            formData.append("gameFile", gameFile);
-            formData.append("thumbnail", thumbnail);
-            formData.append("name", name);
-            formData.append("description", description);
-            formData.append("category", category);
+      responseEl.innerText = "";
+      responseEl.className = "";
+      
+      if (!name || !description || !category || !gameFile || !thumbnail) {
+        responseEl.textContent = "❌ Please fill in all fields and select both files.";
+        responseEl.className = "error";
+        return;
+      }
 
-            try {
-                const response = await fetch("http://localhost:5000/upload", {
-                    method: "POST",
-                    body: formData,
-                });
+      // Prevent multiple uploads
+      uploadBtn.disabled = true;
+      uploadBtn.textContent = "Uploading...";
 
-                const result = await response.json();
-                document.getElementById("response").innerHTML =
-                    response.ok
-                        ? `✅ Game uploaded successfully: ${result.game.name}`
-                        : `❌ Error: ${result.error}`;
-            } catch (error) {
-                document.getElementById("response").innerText = "❌ Upload failed.";
-            }
+      const formData = new FormData();
+      formData.append("gameFile", gameFile);
+      formData.append("thumbnail", thumbnail);
+      formData.append("name", name);
+      formData.append("description", description);
+      formData.append("category", category);
+
+      try {
+        const response = await fetch("http://localhost:5000/upload", {
+          method: "POST",
+          body: formData,
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          responseEl.innerHTML = `✅ Game uploaded successfully: <strong>${result.game.name}</strong>`;
+          responseEl.className = "success";
+
+          // Optionally clear form
+          document.getElementById("gameName").value = "";
+          document.getElementById("gameDescription").value = "";
+          document.getElementById("category").value = "";
+          document.getElementById("gameFile").value = "";
+          document.getElementById("thumbnail").value = "";
+        } else {
+          responseEl.textContent = `❌ Error: ${result.error}`;
+          responseEl.className = "error";
         }
-    </script>
+      } catch (error) {
+        responseEl.textContent = "❌ Upload failed. Please try again.";
+        responseEl.className = "error";
+      } finally {
+        uploadBtn.disabled = false;
+        uploadBtn.textContent = "Upload";
+      }
+    }
+  </script>
 </body>
-</html>  
+</html>

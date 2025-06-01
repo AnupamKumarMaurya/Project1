@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Community - Game Platform</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0e0b1e;
+      color: #ffffff;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar, .rightbar {
+      width: 20%;
+      background-color: #1a132d;
+      padding: 20px;
+    }
+
+    .sidebar {
+      border-right: 1px solid #2e2b40;
+    }
+
+    .rightbar {
+      border-left: 1px solid #2e2b40;
+    }
+
+    .feed {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 2rem;
+      color: #a58dff;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 15px 0;
+      font-size: 1.1rem;
+      color: #e0d4ff;
+      cursor: pointer;
+    }
+
+    .post-box {
+      background: #191130;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .post-box textarea {
+      width: 100%;
+      background: #1f163a;
+      border: none;
+      color: white;
+      padding: 10px;
+      border-radius: 8px;
+      resize: none;
+    }
+
+    .post-box button {
+      margin-top: 10px;
+      background: #a58dff;
+      border: none;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .post {
+      background-color: #1b1432;
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+
+    .post .user-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .user-info img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+
+    .post .content {
+      margin-bottom: 10px;
+    }
+
+    .post .actions {
+      display: flex;
+      justify-content: space-between;
+      color: #b4a4ff;
+    }
+
+    .rightbar .suggestions {
+      margin-top: 20px;
+    }
+
+    .suggestion {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      align-items: center;
+    }
+
+    .suggestion .info {
+      font-size: 0.9rem;
+    }
+
+    .suggestion button {
+      background: #a58dff;
+      border: none;
+      padding: 6px 10px;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <div class="logo">GameHub</div>
+    <a href="index.html" class="home-link"><i class="fas fa-home"></i> Home</a>
+    <div class="nav-link"><i class="fas fa-fire"></i> Explore</div>
+    <div class="nav-link"><i class="fas fa-bell"></i> Notifications</div>
+    <div class="nav-link"><i class="fas fa-user"></i> Profile</div>
+    <div class="nav-link"><i class="fas fa-right-to-bracket"></i> Login</div>
+    <div class="nav-link"><i class="fas fa-user-plus"></i> Sign Up</div>
+    <button style="margin-top: 20px; padding: 10px 20px; background: #a58dff; color: white; border: none; border-radius: 8px; cursor: pointer;">Post</button>
+  </div>
+
+  <div class="feed">
+    <div class="post-box">
+      <textarea rows="3" placeholder="What's happening?"></textarea>
+      <button>Post</button>
+    </div>
+
+    <div class="post">
+      <div class="user-info">
+        <img src="https://via.placeholder.com/40" alt="User">
+        <strong>@gamer_001</strong>
+      </div>
+      <div class="content">
+        Just beat the final boss of Dark Abyss! What a ride 🕹🔥
+      </div>
+      <div class="actions">
+        <span><i class="far fa-comment"></i> 12</span>
+        <span><i class="far fa-heart"></i> 56</span>
+        <span><i class="fas fa-share"></i></span>
+      </div>
+    </div>
+
+    <!-- More posts here -->
+  </div>
+
+  <div class="rightbar">
+    <h3>Who to follow</h3>
+    <div class="suggestions">
+      <div class="suggestion">
+        <div class="info">@gamerX</div>
+        <button>Follow</button>
+      </div>
+      <div class="suggestion">
+        <div class="info">@gameDev101</div>
+        <button>Follow</button>
+      </div>
+      <div class="suggestion">
+        <div class="info">@pixelMaster</div>
+        <button>Follow</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

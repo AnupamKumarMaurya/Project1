@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GameVault - All Games</title>
+  <link rel="stylesheet" href="styles1.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <header>
+    <div class="logo">Game<span>Vault</span></div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="games.html" class="active">Games</a>
+      <a href="community.html">Community</a>
+      <a href="index.html#upload-section">Upload</a>
+    </nav>
+  </header>
+
+  <main>
+    <section style="padding: 2rem;">
+      <h2 style="font-family: 'Orbitron', sans-serif;">All Uploaded Games</h2>
+       <label for="filter-category">Filter by Category:</label>
+  <select id="filter-category" style="margin-bottom: 1rem;">
+    <!-- Options populated dynamically -->
+  </select>
+
+  <div id="all-games-container" style="display: flex; flex-wrap: wrap; gap: 1rem;">
+    <!-- Games will appear here -->
+  </div>
+</section>
+
+      <div id="all-games-container" style="display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem;">
+        <!-- Game cards will be rendered here -->
+      </div>
+    </section>
+  </main>
+ 
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-column">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#upload-section">Upload Game</a></li>
+          <li><a href="index.html#community-section">Community</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Follow Us</h4>
+        <ul>
+          <li><a href="#">Twitter</a></li>
+          <li><a href="#">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="games.js"></script>
+</body>
+</html>
