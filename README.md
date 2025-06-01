@@ -48,3 +48,4 @@ npm install
 
 # 5. Run the server
 node app.js
+Open -Frontend and Backend only.
